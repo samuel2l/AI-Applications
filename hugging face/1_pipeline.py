@@ -95,3 +95,26 @@ short_summarizer = pipeline(task="summarization", model="cnicu/t5-small-booksum"
 short_summary_text = short_summarizer(original_text)
 
 print(short_summary_text[0]["summary_text"])
+
+
+# auto classes
+#when to use normal pipelines and when to use auto classes
+#PIPELINES
+# I want to quickly compare multiple models for text generation tasks
+# I need a quick way to classify customer reviews as positive or negative
+# The task is a simple text summarization for news articles
+
+# #AUTOCLASSES
+# The task requires tokenizing financial reports, adding custom tokens for terms like 'EBITDA' or 'ROl'
+# Our customer support model should prioritize the 'Urgent' category more often
+# Import necessary library for tokenization
+from transformers import AutoTokenizer
+
+# Load the tokenizer
+tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased-finetuned-sst-2-english")
+
+# Split input text into tokens
+tokens = tokenizer.tokenize("AI: Making robots smarter and humans lazier!")
+
+# Display the tokenized output
+print(f"Tokenized output: {tokens}")
