@@ -56,3 +56,42 @@ classifier = pipeline(task="text-classification", model="cross-encoder/qnli-elec
 output = classifier("Where is the capital of France?, Brittany is known for its stunning coastline.")
 
 print(output)
+
+
+#DYNAMIC category assignment
+text = "AI-powered robots assist in complex brain surgeries with precision."
+
+# Create the pipeline
+classifier = pipeline(task="zero-shot-classification", model="facebook/bart-large-mnli")
+
+# Create the categories list
+categories = ["politics", "science", "sports"]
+
+# Predict the output
+output = classifier(text, categories)
+
+# Print the top label and its score
+print(f"Top Label: {output['labels'][0]} with score: {output['scores'][0]}")
+
+
+#Summarization - here are two main types: extractive, which selects key sentences from the original text, and abstractive, which generates new sentences summarizing main ideas.
+
+#extractive summarization
+# Create the summarization pipeline
+summarizer = pipeline(task="summarization", model="cnicu/t5-small-booksum")
+
+# Summarize the text
+summary_text = summarizer(original_text)
+
+# Compare the length
+print(f"Original text length: {len(original_text)}")
+print(f"Summary length: {len(summary_text[0]['summary_text'])}")
+
+
+#adjusting summary length
+# Generate a summary of original_text between 1 and 10 tokens
+short_summarizer = pipeline(task="summarization", model="cnicu/t5-small-booksum", min_new_tokens=1, max_new_tokens=10)
+
+short_summary_text = short_summarizer(original_text)
+
+print(short_summary_text[0]["summary_text"])
