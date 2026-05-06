@@ -218,3 +218,19 @@ if num_tokens <= 100:
     print(response.choices[0].message.content)
 else:
     print("Message exceeds token limit")
+
+
+#tool calling
+
+client = OpenAI(api_key="<OPENAI_API_TOKEN>")
+
+response= client.chat.completions.create(
+    model="gpt-4o-mini",
+    # Add the message
+    messages=message_listing,
+    # Add your function definition
+    tools=function_definition
+)
+
+# Print the response
+print(response.choices[0].message.tool_calls[0].function.arguments)
