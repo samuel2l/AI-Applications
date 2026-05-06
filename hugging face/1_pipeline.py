@@ -251,3 +251,17 @@ response = client.chat.completions.create(
 
 # Print the response
 print(response)
+
+#moderation -  used to detect and filter out harmful or inappropriate content in user-generated text, ensuring a safer and more positive online environment. It can be used to identify and block content that violates community guidelines, such as hate speech, harassment, or explicit material. By implementing moderation tools, platforms can maintain a respectful and inclusive space for users while preventing the spread of harmful content.
+client = OpenAI(api_key="<OPENAI_API_TOKEN>")
+
+message = "Can you show some example sentences in the past tense in French?"
+
+# Use the moderation API
+moderation_response = client.moderations.create(
+    input=message
+)
+
+# print(moderation_response)
+for flag in moderation_response.results[0].categories:
+    print(flag)
