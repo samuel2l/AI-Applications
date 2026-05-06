@@ -157,7 +157,7 @@ print(f"Answer: {result['answer']}")
 
 
 
-#batching x rate limiting
+#retrying failed API calls with tenacity
 
 # Import the tenacity library
 from tenacity import retry,wait_random_exponential,stop_after_attempt
@@ -174,3 +174,27 @@ def get_response(model, message):
     )
     return response.choices[0].message.content
 print(get_response("gpt-4o-mini", {"role": "user", "content": "List ten holiday destinations."}))
+
+
+# Batching messages
+# You are developing a fitness application to track running and cycling training, but find out that all your customers' distances have been measured in kilometers, and you'd like to have them also converted to miles.
+
+# You decide to use the OpenAI API to send requests for each measurement, but want to avoid using a for loop that would send too many requests. You decide to send the requests in batches, specifying a system message that asks to convert each of the measurements from kilometers to miles and present the results in a table containing both the original and converted measurements.
+
+# The measurements list (containing a list of floats) and the get_response() function have already been imported.
+
+client = OpenAI(api_key="<OPENAI_API_TOKEN>")
+
+messages = []
+# Provide a system message and user messages to send the batch
+messages.append({
+    "role":"system",
+    "content": "Convert the following measurements from kilometers into miles. Present the results in a table containing both the old and new values"
+})
+# Append measurements to the message
+[messages.append({
+    "role":"user","content":f"{i}"
+}) for i in measurements]
+
+response = get_response(messages)
+print(response)
