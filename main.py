@@ -265,3 +265,4 @@ moderation_response = client.moderations.create(
 # print(moderation_response)
 for flag in moderation_response.results[0].categories:
     print(flag)
+
