@@ -1,5 +1,5 @@
 from transformers import pipeline 
-
+# pt2 
 gpt2_pipeline = pipeline(task="text-generation", model="openai-community/gpt2")
 
 # Generate three text outputs with a maximum length of 10 tokens
