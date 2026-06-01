@@ -24,3 +24,23 @@ index = pc.Index("my-first-index")
 
 # Print the index statistics
 print(index.describe_index_stats())
+
+# vectors = [
+#         {
+#         "id": "0",
+#         "values": [0.025525547564029694, ..., 0.0188823901116848]
+#         "metadata": {"genre": "action", "year": 2024}
+#     }
+# ]
+
+# Initialize the Pinecone client with your API key
+pc = Pinecone(api_key="pcsk_5dVpiR_Gjgx2xBfPbBPvKZGsd8UXSuTw6fuFn6WaDuCAfpMfiSDQYCUPFwyiVeqgYcfAVr")
+
+# Connect to your index
+index = pc.Index("datacamp-index")
+
+# Ingest the vectors and metadata
+index.upsert(vectors)
+
+# Print the index statistics
+print(index.describe_index_stats())
