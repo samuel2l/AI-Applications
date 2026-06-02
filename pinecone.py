@@ -57,3 +57,18 @@ fetched_vectors = index.fetch(ids=ids)
 # Extract the metadata from each result in fetched_vectors
 metadatas = [fetched_vectors['vectors'][id]['metadata'] for id in ids]
 print(metadatas)
+
+# Initialize the Pinecone client with your API key
+pc = Pinecone(api_key="pcsk_5dVpiR_Gjgx2xBfPbBPvKZGsd8UXSuTw6fuFn6WaDuCAfpMfiSDQYCUPFwyiVeqgYcfAVr")
+
+index = pc.Index('datacamp-index')
+
+# Retrieve the top three most similar records
+query_result = index.query(
+
+    vector=vector,
+
+    top_k=3
+
+)
+print(query_result)
