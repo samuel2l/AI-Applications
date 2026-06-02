@@ -155,3 +155,52 @@ index.delete(ids=["3","4"])
 
 # Retrieve metrics of the connected Pinecone index
 print(index.describe_index_stats())
+
+
+#BATCHING
+
+def chunks(iterable, batch_size=100):
+    """A helper function to break an iterable into chunks of size batch_size."""
+    # Convert the iterable into an iterator
+    it = iter(iterable)
+    # Slice the iterator into chunks of size batch_size
+    chunk = tuple(itertools.islice(it, batch_size))
+    while chunk:
+        # Yield the chunk
+        yield chunk
+        chunk = tuple(itertools.islice(it, batch_size))
+
+
+
+# Initialize the Pinecone client with your API key
+pc = Pinecone(api_key="pcsk_5dVpiR_Gjgx2xBfPbBPvKZGsd8UXSuTw6fuFn6WaDuCAfpMfiSDQYCUPFwyiVeqgYcfAVr")
+
+index = pc.Index('datacamp-index')
+
+# Upsert vectors in batches of 100
+for chunk in chunks(vectors):
+    index.upsert(vectors=chunk)
+
+# Retrieve statistics of the connected Pinecone index
+print(index.describe_index_stats())
+
+
+# Initialize the Pinecone client to allow 20 simultaneous requests.
+# Upsert the vectors in vectors in batches of 200 vectors per request asynchronously, configuring 20 simultaneous requests.
+# Print the updated metrics of the 'datacamp-index' Pinecone index.
+
+# Initialize the client
+pc = Pinecone(api_key="pcsk_5dVpiR_Gjgx2xBfPbBPvKZGsd8UXSuTw6fuFn6WaDuCAfpMfiSDQYCUPFwyiVeqgYcfAVr", pool_threads=20)
+
+index = pc.Index('datacamp-index',)
+
+# Upsert vectors in batches of 200 vectors
+with pc.Index('datacamp-index', pool_threads=20) as index:
+    async_results = [
+        index.upsert(vectors=chunk, async_req=True)
+        for chunk in chunks(vectors, batch_size=200)
+    ]
+    [async_result.get() for async_result in async_results]
+
+# Retrieve statistics of the connected Pinecone index
+print(index.describe_index_stats())
