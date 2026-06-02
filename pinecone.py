@@ -204,3 +204,24 @@ with pc.Index('datacamp-index', pool_threads=20) as index:
 
 # Retrieve statistics of the connected Pinecone index
 print(index.describe_index_stats())
+
+
+
+# Initialize the Pinecone client with your API key
+pc = Pinecone(api_key="pcsk_5dVpiR_Gjgx2xBfPbBPvKZGsd8UXSuTw6fuFn6WaDuCAfpMfiSDQYCUPFwyiVeqgYcfAVr")
+index = pc.Index('datacamp-index')
+
+# Upsert vector_set1 to namespace1
+index.upsert(
+    vectors=vector_set1,
+    namespace="namespace1"
+)
+
+# Upsert vector_set2 to namespace2
+index.upsert(
+    vectors=vector_set2,
+    namespace="namespace2"
+)
+
+# Print the index statistics
+print(index.describe_index_stats())
