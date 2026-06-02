@@ -144,3 +144,14 @@ index.update(
 fetched_vector = index.fetch(ids=["7"])
 
 print(fetched_vector)
+
+# Initialize the Pinecone client using your API key
+pc = Pinecone(api_key="pcsk_5dVpiR_Gjgx2xBfPbBPvKZGsd8UXSuTw6fuFn6WaDuCAfpMfiSDQYCUPFwyiVeqgYcfAVr")
+
+index = pc.Index('datacamp-index')
+
+# Delete vectors
+index.delete(ids=["3","4"])
+
+# Retrieve metrics of the connected Pinecone index
+print(index.describe_index_stats())
