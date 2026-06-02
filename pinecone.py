@@ -91,3 +91,19 @@ pc.create_index(
 
 # Print a list of your indexes
 print(pc.list_indexes())
+
+# Initialize the Pinecone client using your API key
+pc = Pinecone(api_key="pcsk_5dVpiR_Gjgx2xBfPbBPvKZGsd8UXSuTw6fuFn6WaDuCAfpMfiSDQYCUPFwyiVeqgYcfAVr")
+
+index = pc.Index('datacamp-index')
+
+# Retrieve the MOST similar vector with genre and year filters
+query_result = index.query(
+    vector=vector,
+    top_k=1,
+    filter={
+        "genre":"thriller",
+        "year":{"$lt":2018}
+    }
+)
+print(query_result)
