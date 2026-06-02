@@ -107,3 +107,40 @@ query_result = index.query(
     }
 )
 print(query_result)
+
+# Initialize the Pinecone client with your API key
+pc = Pinecone(api_key="pcsk_5dVpiR_Gjgx2xBfPbBPvKZGsd8UXSuTw6fuFn6WaDuCAfpMfiSDQYCUPFwyiVeqgYcfAVr")
+
+
+
+index = pc.Index('datacamp-index')
+
+# Update the values of vector ID 7
+
+index.update(id="7", values=vector)
+
+# Fetch vector ID 7
+
+fetched_vector = index.fetch(ids=["7"])
+
+print(fetched_vector)
+
+# Initialize the Pinecone client with your API key
+pc = Pinecone(api_key="pcsk_5dVpiR_Gjgx2xBfPbBPvKZGsd8UXSuTw6fuFn6WaDuCAfpMfiSDQYCUPFwyiVeqgYcfAVr")
+
+index = pc.Index('datacamp-index')
+
+# Update the metadata of vector ID 7
+index.update(
+    id="7",
+    set_metadata={
+        "genre": "thriller",
+        "year": 2024
+    }
+)
+
+# Fetch vector ID 7
+
+fetched_vector = index.fetch(ids=["7"])
+
+print(fetched_vector)
