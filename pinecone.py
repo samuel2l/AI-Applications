@@ -225,3 +225,17 @@ index.upsert(
 
 # Print the index statistics
 print(index.describe_index_stats())
+
+
+# Initialize the Pinecone client with your API key
+pc = Pinecone(api_key="pcsk_5dVpiR_Gjgx2xBfPbBPvKZGsd8UXSuTw6fuFn6WaDuCAfpMfiSDQYCUPFwyiVeqgYcfAVr")
+
+index = pc.Index('datacamp-index')
+
+# Query namespace1 with the vector provided
+query_result = index.query(
+    namespace="namespace1",
+    vector=vector,
+    top_k=3
+)
+print(query_result)
