@@ -81,3 +81,70 @@ documents, sources = retrieve(
 
 print(documents)
 print(sources)
+
+
+
+# RAG questions answering function
+# You're almost there! The final piece in the RAG workflow is to integrate the retrieved documents with a question-answering model.
+
+# A prompt_with_context_builder() function has already been defined and made available to you. This function takes the documents retrieved from the Pinecone index, and integrates them into a prompt that the question-answering model can ingest:
+
+# def prompt_with_context_builder(query, docs):
+#     delim = '\n\n---\n\n'
+#     prompt_start = 'Answer the question based on the context below.\n\nContext:\n'
+#     prompt_end = f'\n\nQuestion: {query}\nAnswer:'
+
+#     prompt = prompt_start + delim.join(docs) + prompt_end
+#     return prompt
+# You'll implement the question_answering() function, which will provide OpenAI's language model gpt-4o-mini with additional context and sources with which it can answer your questions.
+
+# Instructions
+# 100 XP
+# Initialize the Pinecone client with your API key (the OpenAI client is available as client).
+# Retrieve the three most similar documents to the query text from the 'youtube_rag_dataset' namespace.
+# Generate a response to the provided prompt and sys_prompt using OpenAI's 'gpt-4o-mini' model, specified using the chat_model function argument.
+
+# Initialize the Pinecone client
+pc = Pinecone(api_key="pcsk_5dVpiR_Gjgx2xBfPbBPvKZGsd8UXSuTw6fuFn6WaDuCAfpMfiSDQYCUPFwyiVeqgYcfAVr")
+index = pc.Index('pinecone-datacamp')
+
+query = "How to build next-level Q&A with OpenAI"
+
+# Retrieve the top three most similar documents and their sources
+documents, sources = retrieve(
+    query,
+    top_k=3,
+    namespace='youtube_rag_dataset',
+    emb_model="text-embedding-3-small"
+)
+
+prompt_with_context = prompt_with_context_builder(query, documents)
+print(prompt_with_context)
+
+def question_answering(prompt, sources, chat_model):
+    sys_prompt = "You are a helpful assistant that always answers questions."
+    
+    # Use OpenAI chat completions to generate a response
+    res = client.chat.completions.create(
+        model=chat_model,
+        messages=[
+            {"role": "system", "content": sys_prompt},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0
+    )
+    
+    answer = res.choices[0].message.content.strip()
+    answer += "\n\nSources:"
+    for source in sources:
+        answer += "\n" + source[0] + ": " + source[1]
+    
+    return answer
+
+answer = question_answering(
+  prompt=prompt_with_context,
+  sources=sources,
+  chat_model='gpt-4o-mini'
+)
+
+print(answer)
