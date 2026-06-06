@@ -15,7 +15,7 @@ for batch in np.array_split(youtube_df, len(youtube_df) / batch_limit):
     
     texts = batch['text'].tolist()
     
-    ids = [str(uuid4()) for _ in range(len(texts))]
+    ids = [str(uuid4()) for x in range(len(texts))]
     
     # Encode texts using OpenAI
     response = client.embeddings.create(
