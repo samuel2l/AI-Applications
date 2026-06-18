@@ -148,3 +148,5 @@ answer = question_answering(
 )
 
 print(answer)
+
+print(answer)
