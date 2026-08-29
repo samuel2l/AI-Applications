@@ -105,7 +105,7 @@ print(sources)
 # Generate a response to the provided prompt and sys_prompt using OpenAI's 'gpt-4o-mini' model, specified using the chat_model function argument.
 
 # Initialize the Pinecone client
-pc = Pinecone(api_key="pcsk_5dVpiR_Gjgx2xBfPbBPvKZGsd8UXSuTw6fuFn6WaDuCAfpMfiSDQYCUPFwyiVeqgYcfAVr")
+pc = Pinecone(api_key="")
 index = pc.Index('pinecone-datacamp')
 
 query = "How to build next-level Q&A with OpenAI"
