@@ -34,7 +34,7 @@ print(index.describe_index_stats())
 
 
 # Initialize the Pinecone client
-pc = Pinecone(api_key="pcsk_5dVpiR_Gjgx2xBfPbBPvKZGsd8UXSuTw6fuFn6WaDuCAfpMfiSDQYCUPFwyiVeqgYcfAVr")
+pc = Pinecone(api_key="")
 index = pc.Index('pinecone-datacamp')
 
 # Building a retrieval function
