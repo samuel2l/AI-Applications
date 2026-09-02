@@ -190,7 +190,7 @@ print(index.describe_index_stats())
 # Print the updated metrics of the 'datacamp-index' Pinecone index.
 
 # Initialize the client
-pc = Pinecone(api_key="pcsk_5dVpiR_Gjgx2xBfPbBPvKZGsd8UXSuTw6fuFn6WaDuCAfpMfiSDQYCUPFwyiVeqgYcfAVr", pool_threads=20)
+pc = Pinecone(api_key="", pool_threads=20)
 
 index = pc.Index('datacamp-index',)
 
